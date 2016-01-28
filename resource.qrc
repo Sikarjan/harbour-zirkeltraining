@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>sounds/countdown_male.wav</file>
+        <file>sounds/gong.wav</file>
+        <file>sounds/KeepAlive.wav</file>
+        <file>images/pause.png</file>
+        <file>images/play.png</file>
+        <file>images/skip.png</file>
+        <file>sounds/click.wav</file>
+        <file>images/particle.png</file>
+        <file>sounds/applause.wav</file>
+    </qresource>
+</RCC>
