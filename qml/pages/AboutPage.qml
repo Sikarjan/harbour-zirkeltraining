@@ -30,11 +30,13 @@ Page {
             }
 
             Text {
+                textFormat: Text.RichText
                 font.pixelSize: Theme.fontSizeSmall
                 width: column.width
                 color: Theme.highlightColor
                 wrapMode: Text.Wrap
-                text: qsTr("You can find me on http://forum.jollausers.com/sailfish-developers/zirkeltraining if you want to get in touch.")
+                text: qsTr("Please use <a href=\"https://github.com/Sikarjan/harbour-zirkeltraining\">GitHub</a> for comments and bug reports.")
+                onLinkActivated: Qt.openUrlExternally(link)
             }
 
             Text {

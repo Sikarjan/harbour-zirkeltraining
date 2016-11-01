@@ -35,7 +35,7 @@
 #include <sailfishapp.h>
 #include "audioplayer.h"
 #include "chronos.h"
-#include "preventsleep.h"
+#include "support.h"
 #include "zt.h"
 
 #include <QDir>
@@ -55,9 +55,12 @@ int main(int argc, char *argv[])
     view->rootContext()->setContextProperty("m_playlists", files);
     view->rootContext()->setContextProperty("fileCounter", fileCounter);
 
+    // Inclue Support and heart beat
+    Support* applib = new Support();
+    view->rootContext()->setContextProperty("Support", applib);
+
     qmlRegisterType<AudioPlayer, 1>("harbour.zirkeltraining", 1, 0,"AudioPlayer");
     qmlRegisterType<Chronos, 1>("harbour.zirkeltraining", 1, 0, "Chronos");
-    qmlRegisterType<PreventSleep, 1>("harbour.zirkeltraining", 1, 0,"PreventSleep");
     qmlRegisterType<ZT, 1>("harbour.zirkeltraining", 1, 0, "ZT");
 
     view->setSource(SailfishApp::pathTo("qml/harbour-zirkeltraining.qml"));

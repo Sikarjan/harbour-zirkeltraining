@@ -20,8 +20,8 @@
         <translation>Um Musik während der Trainingsphase zu aktivieren muss zuerst eine Playlist mit der Jolla Media App erstellt worden sein. Die App sucht die .pls Dateien in dem Standardordner der Media App. Wenn eine Playlist vorhanden ist, kann diese durch einen klick auf &apos;keine Playlist ausgewählt&apos; es wird dann eine Seite mit allen vorhandenen Playlisten angezeigt.</translation>
     </message>
     <message>
-        <source>You can find me on http://forum.jollausers.com/sailfish-developers/zirkeltraining if you want to get in touch.</source>
-        <translation>Ich kann unter http://forum.jollausers.com/sailfish-developers/zirkeltraining kontaktiert werden.</translation>
+        <source>Please use &lt;a href=&quot;https://github.com/Sikarjan/harbour-zirkeltraining&quot;&gt;GitHub&lt;/a&gt; for comments and bug reports.</source>
+        <translation>Bitte verwendet &lt;a href=&quot;https://github.com/Sikarjan/harbour-zirkeltraining&quot;&gt;GitHub&lt;/a&gt; für Kommentare oder Fehler</translation>
     </message>
 </context>
 <context>
@@ -75,10 +75,6 @@
     <message>
         <source>Zirkeltraining</source>
         <translation>Zirkeltraining</translation>
-    </message>
-    <message>
-        <source>Playlist:</source>
-        <translation>Playlist:</translation>
     </message>
     <message>
         <source>Could not be loaded</source>
@@ -139,6 +135,10 @@
     <message>
         <source>Increase Pause Time</source>
         <translation>Anpassung Pause</translation>
+    </message>
+    <message>
+        <source>Playlist</source>
+        <translation>Wiedergabeliste</translation>
     </message>
 </context>
 <context>

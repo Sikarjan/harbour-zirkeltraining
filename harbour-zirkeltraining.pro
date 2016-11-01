@@ -19,9 +19,9 @@ QT += multimedia \
 
 SOURCES += src/harbour-zirkeltraining.cpp \
     src/audioplayer.cpp \
-    src/preventsleep.cpp \
     src/chronos.cpp \
-    src/zt.cpp
+    src/zt.cpp \
+    src/support.cpp
 
 OTHER_FILES += qml/harbour-zirkeltraining.qml \
     qml/cover/CoverPage.qml \
@@ -47,9 +47,9 @@ TRANSLATIONS += translations/harbour-zirkeltraining-de.ts
 
 HEADERS += \
     src/audioplayer.h \
-    src/preventsleep.h \
     src/chronos.h \
-    src/zt.h
+    src/zt.h \
+    src/support.h
 
 RESOURCES += \
     resource.qrc

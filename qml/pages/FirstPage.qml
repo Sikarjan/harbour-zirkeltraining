@@ -51,8 +51,7 @@ Page {
     Component.onCompleted: {
         Storage.initialize()
         if(Storage.getSetting("sleepMode") === "1"){
-            sleep.stayUp(true)
-            sleep.preventSleep = true
+            clock.displayOn = true
         }
 
         if(Storage.getSetting("randomizer") === "1")
@@ -235,27 +234,19 @@ Page {
                 }
             }
 
-            Row {
-                x: Theme.paddingLarge
-                spacing: 5
-                Label {
-                    id: playlistName
-                    width: 110
-                    text: qsTr("Playlist:")
-                }
-
-                Button {
-                    id: playlistButton
-                    text:{
-                        if(player.playlistError){
-                            qsTr("Could not be loaded")
-                        }else{
-                            (player.playlist === "" ? qsTr("No playlist selected"):player.playlist)
-                        }
+            Button {
+                id: playlistButton
+                anchors.horizontalCenter: parent.horizontalCenter
+                text:{
+                    if(player.playlistError){
+                        qsTr("Could not be loaded")
+                    }else{
+                        (player.playlist === "" ? qsTr("No playlist selected"):qsTr("Playlist")+": "+player.playlist)
                     }
-                    onClicked: pageStack.push(Qt.resolvedUrl("Playlist.qml"))
                 }
+                onClicked: pageStack.push(Qt.resolvedUrl("Playlist.qml"))
             }
+
 
             Button {
                 id: start

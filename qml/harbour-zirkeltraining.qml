@@ -34,6 +34,7 @@ import QtMultimedia 5.0
 import "pages"
 
 import harbour.zirkeltraining 1.0
+//import org.nemomobile.keepalive 1.1
 
 ApplicationWindow
 {
@@ -51,11 +52,6 @@ ApplicationWindow
         property bool isActive: false
         property bool random
         property bool newTrack
-    }
-
-    PreventSleep {
-        id: sleep
-        property bool preventSleep: false
     }
 
     Item {
@@ -89,6 +85,7 @@ ApplicationWindow
         property bool iniStart: true
         property int last: 0
         property string statusText: qsTr("Get ready!")
+        property bool displayOn: false
 
         states: [
             State {
@@ -138,10 +135,13 @@ ApplicationWindow
             id: applause
             source: "qrc:/sounds/applause.wav"
         }
-
+        SoundEffect {
+            id: tick
+            source: "qrc:/sounds/tick.wav"
+        }
         SoundEffect {
             id: keepAlive
-            source: "qrc:/sounds/KeepAlive.wav"
+            source: "qrc:/sounds/keepAlive.wav"
         }
 
         Chronos {
@@ -170,13 +170,13 @@ ApplicationWindow
                     if(player.newTrack)
                         player.next()
 
+                    soundGong.play()
+
                     clock.cycles--
                     if(clock.cycles === 0){
                         myTime.running = false
                         // Button still displays pause symbol. Could be improved
-                        applause.play()
-                    }else{
-                        soundGong.play()
+                        applauseTimer.start()
                     }
                 }else if(clock.time <= -1){
                     if(clock.trainingPhase){
@@ -225,28 +225,25 @@ ApplicationWindow
                 else if(clock.time > 5 && soundCountdown.playing)
                     soundCountdown.stop()
             }
-
-
         }
 
-        // Prevent phone from going into deep sleep
+        // Final applause
         Timer {
+            id: applauseTimer
             interval: 1000
-            running: myTime.running
+            running: false
+            repeat:false
+
+            onTriggered: applause.play()
+        }
+
+        Timer {
+            id: keepDisplayOn
+            interval: 15000
+            running: false
             repeat: true
 
-            property int i: 0
-
-            onTriggered: {
-                console.log("I am alive! "+i)
-                i++
-                if(!player.isActive)
-                    keepAlive.play()
-                else if(!clock.trainingPhase)
-                    keepAlive.play()
-                else
-                    keepAlive.stop()
-            }
+            onTriggered: Support.setBlankingMode(clock.displayOn)
         }
     }
 

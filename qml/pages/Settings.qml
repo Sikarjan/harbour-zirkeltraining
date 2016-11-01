@@ -5,10 +5,7 @@ import "../js/storage.js" as Storage
 
 Dialog {
     id: preferencePage
-    anchors{
-        fill: parent
-        //margins: Theme.paddingLarge
-    }
+    anchors.fill: parent
 
     Column {
         width: preferencePage.width
@@ -35,7 +32,7 @@ Dialog {
 
         TextSwitch {
             id: screenSaverSwitcher
-            checked: sleep.preventSleep
+            checked: clock.displayOn
             text: qsTr("Turn off screen saver")
             description: qsTr("When activated prevents screen from being turned off.")
 //            onCheckedChanged: sleep.preventSleep = screenSaverSwitcher.checked
@@ -51,8 +48,7 @@ Dialog {
         Storage.setSetting("sleepMode", screenSaverSwitcher.checked)
         Storage.setSetting("randomizer", randomizeSwitcher.checked)
         Storage.setSetting("newTracks", newTrackSwitcher.checked)
-        sleep.stayUp(screenSaverSwitcher.checked)
-        sleep.preventSleep = screenSaverSwitcher.checked
+        clock.displayOn = screenSaverSwitcher.checked
         player.random = randomizeSwitcher.checked
         player.newTrack = newTrackSwitcher.checked
     }

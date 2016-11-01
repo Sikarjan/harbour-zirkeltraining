@@ -20,7 +20,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>You can find me on http://forum.jollausers.com/sailfish-developers/zirkeltraining if you want to get in touch.</source>
+        <source>Please use &lt;a href=&quot;https://github.com/Sikarjan/harbour-zirkeltraining&quot;&gt;GitHub&lt;/a&gt; for comments and bug reports.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -97,10 +97,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Playlist:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Could not be loaded</source>
         <translation type="unfinished"></translation>
     </message>
@@ -138,6 +134,10 @@
     </message>
     <message>
         <source>Increase Pause Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Playlist</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

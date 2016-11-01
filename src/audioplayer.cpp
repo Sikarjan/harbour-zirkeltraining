@@ -38,10 +38,12 @@ bool AudioPlayer::setSource(const QString &source){
 }
 
 void AudioPlayer::play(){
+    qDebug() << "Starting Player";
     player->play();
 }
 
 void AudioPlayer::pause(){
+    qDebug() << "Pausing Player";
     player->pause();
 }
 

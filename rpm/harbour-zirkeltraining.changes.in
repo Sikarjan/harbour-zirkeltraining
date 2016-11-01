@@ -7,6 +7,23 @@
 
 # * date Author's Name <author's email> version-release
 # - Summary of changes
+* Mon Oct 31 2016 Flor707 <store@innobiz.de> 2.2.2-1
+- Fixed bug playlist not selected by tapping on name
+- [Improved] Playlist button centered
+- [Issue] It still can happen that the player does not restart after a pause. Forward will restart the player
+
+* Thu Mar 11 2016 Flor707 <store@innobiz.de> 2.2.1-1
+- Fixed bug that display blanked with keep on aktivated
+- [Issue] It still can happen that the player does not restart after a pause
+
+* Thu Feb 19 2016 Flor707 <store@innobiz.de> 2.2.0-1
+- Fixed bug that prevented player from starting again
+
+* Thu Feb 15 2016 Flor707 <store@innobiz.de> 2.1.0-1
+- Fixed bug that display blanked with keep on aktivated
+- Fixed bug that phone went into deep sleep when no playlist was selected
+- [Improved] Last gong is playing before applause
+
 * Sat Feb 28 2015 Flor707 <store@innobiz.de> 1.3.0-3
 - Fixed bug that deleted changed setting on return to first page
 - Fixed bug that re-started trainings started in the wrong mode
@@ -14,6 +31,7 @@
 - [new] Separate sliders for taining and pause adjustment
 - [new] Indicator for changed profiles
 - [Improved] Increased max Zig-Zack time
+
 * Tue Dec 16 2014 Flor707 <store@innobiz.de> 1.2.3-1
 - Fixed bug preventing Jolla from going to deep sleep
 * Sun Dec 04 2014 Flor707 <store@innobiz.de> 1.2.2-1

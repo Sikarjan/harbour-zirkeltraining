@@ -46,7 +46,11 @@ Page {
                 clock.iniStart = true
                 confetti.running = false
                 applause.stop()
+                Support.setBlankingMode(false)
+                keepDisplayOn.running = false
             }
+        }else if(status === PageStatus.Activating){
+            keepDisplayOn.running = true
         }
     }
 
@@ -104,6 +108,12 @@ Page {
             opacity: (animateOpacity.running? 0: 1.0)
             font.bold: true
             font.pixelSize: 300
+
+            onTextChanged: {
+                keepAlive.play();
+                if(clock.trainingPhase && !player.isActive && !soundCountdown.playing)
+                    tick.play()
+            }
         }
         Text {
             id: finsh
