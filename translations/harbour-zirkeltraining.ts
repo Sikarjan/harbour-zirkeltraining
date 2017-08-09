@@ -245,10 +245,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Turn off screen saver</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -270,6 +266,26 @@
     </message>
     <message>
         <source>When activated prevents screen from being turned off.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Play tick on every second if no playlist is selected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable screen saver</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disable screen saver</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disable tick</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable tick</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

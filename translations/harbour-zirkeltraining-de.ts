@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.1" language="de_DE">
 <context>
     <name>AboutPage</name>
     <message>
@@ -21,14 +21,14 @@
     </message>
     <message>
         <source>Please use &lt;a href=&quot;https://github.com/Sikarjan/harbour-zirkeltraining&quot;&gt;GitHub&lt;/a&gt; for comments and bug reports.</source>
-        <translation>Bitte verwendet &lt;a href=&quot;https://github.com/Sikarjan/harbour-zirkeltraining&quot;&gt;GitHub&lt;/a&gt; für Kommentare oder Fehler</translation>
+        <translation>Bitte verwendet &lt;a href=&quot;https://github.com/Sikarjan/harbour-zirkeltraining&quot;&gt;GitHub&lt;/a&gt; für Kommentare oder Fehler.</translation>
     </message>
 </context>
 <context>
     <name>CountdownPage</name>
     <message>
         <source>Remaining Cycles:</source>
-        <translation>Verbleibende Zyklen</translation>
+        <translation>Verbleibende Zyklen:</translation>
     </message>
     <message>
         <source>You have done it!</source>
@@ -82,7 +82,7 @@
     </message>
     <message>
         <source>Training mode:</source>
-        <translation>Trainingsmodus</translation>
+        <translation>Trainingsmodus:</translation>
     </message>
     <message>
         <source>Pyramid</source>
@@ -149,7 +149,7 @@
     </message>
     <message>
         <source>Deleting all profiles</source>
-        <translation>Lösche alle Profile...</translation>
+        <translation>Lösche alle Profile</translation>
     </message>
     <message>
         <source>Load profile</source>
@@ -185,7 +185,7 @@
     </message>
     <message>
         <source>Training Style: </source>
-        <translation>Trainingsmodus</translation>
+        <translation>Trainingsmodus: </translation>
     </message>
     <message>
         <source> - Training time: </source>
@@ -245,10 +245,6 @@
         <translation>Speichern</translation>
     </message>
     <message>
-        <source>Turn off screen saver</source>
-        <translation>Bildschirmschoner ausschalten</translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
@@ -258,7 +254,7 @@
     </message>
     <message>
         <source>When activated current playlist gets randomized on loading.</source>
-        <translation>Falls aktiviert wird die Playliste in zufälliger Reihenfolge wiedergegeben.</translation>
+        <translation>Wenn aktiviert wird die ausgewählte Wiedergabeliste in zufälliger Reihenfolge abgespielt.</translation>
     </message>
     <message>
         <source>New track</source>
@@ -266,11 +262,31 @@
     </message>
     <message>
         <source>When active a new track is played in every training phase.</source>
-        <translation>Falls aktiviert wird bei jedem neuen Trainingszyklus ein neues Lied gespielt.</translation>
+        <translation>Wenn aktiviert wird mit jeder Trainingsphase ein neues Lied begonnen.</translation>
     </message>
     <message>
         <source>When activated prevents screen from being turned off.</source>
-        <translation>Falls aktiviert schaltet sich der Bildschrim nicht aus.</translation>
+        <translation>Wenn aktiviert wird verhindert, dass der Bildschirm sich abschaltet.</translation>
+    </message>
+    <message>
+        <source>Play tick on every second if no playlist is selected.</source>
+        <translation>Soundeffekt mit jeder Sekunde wenn keine Wiedergabeliste ausgewählt worden ist.</translation>
+    </message>
+    <message>
+        <source>Enable screen saver</source>
+        <translation>Bildschirm automatisch ausschalten</translation>
+    </message>
+    <message>
+        <source>Disable screen saver</source>
+        <translation>Bildschirm ausschalten verhindern</translation>
+    </message>
+    <message>
+        <source>Disable tick</source>
+        <translation>Sekundentick deaktivieren</translation>
+    </message>
+    <message>
+        <source>Enable tick</source>
+        <translation>Sekundentick aktivieren</translation>
     </message>
 </context>
 <context>

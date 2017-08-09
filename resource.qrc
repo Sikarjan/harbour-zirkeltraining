@@ -9,6 +9,5 @@
         <file>images/particle.png</file>
         <file>sounds/applause.wav</file>
         <file>sounds/tick.wav</file>
-        <file>sounds/keepAlive.wav</file>
     </qresource>
 </RCC>

@@ -7,6 +7,12 @@
 
 # * date Author's Name <author's email> version-release
 # - Summary of changes
+* Tue Aug 08 2017 Flor707 <store@innobiz.de> 2.3.0-1
+- [Improved] switched to libkeepalive to prevent phone from going into sleep while the counter is running
+- [new] made tick sound with every secon, if no music is playing, optional
+- [Improved] German translation
+- [Improved] added icons in all sizes
+
 * Mon Oct 31 2016 Flor707 <store@innobiz.de> 2.2.2-1
 - Fixed bug playlist not selected by tapping on name
 - [Improved] Playlist button centered

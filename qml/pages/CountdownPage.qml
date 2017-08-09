@@ -31,6 +31,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import QtQuick.Particles 2.0
+import org.nemomobile.keepalive 1.1
 
 Page {
     id: countdownPage
@@ -48,6 +49,7 @@ Page {
                 applause.stop()
                 Support.setBlankingMode(false)
                 keepDisplayOn.running = false
+                keepAlive.enabled = false
             }
         }else if(status === PageStatus.Activating){
             keepDisplayOn.running = true
@@ -56,11 +58,16 @@ Page {
 
     Component.onCompleted: {
         myTime.running = true
+        keepAlive.enabled = true
         if(player.playlist !== ""){
             player.setSource(player.playlist)
             if(player.random)
                 player.shuffle()
         }
+    }
+
+    KeepAlive {
+        id: keepAlive
     }
 
     NumberAnimation {
@@ -110,11 +117,11 @@ Page {
             font.pixelSize: 300
 
             onTextChanged: {
-                keepAlive.play();
-                if(clock.trainingPhase && !player.isActive && !soundCountdown.playing)
+                if(!player.isActive && !soundCountdown.playing && clock.playTick)
                     tick.play()
             }
         }
+
         Text {
             id: finsh
             visible: clock.cycles === 0? true:false

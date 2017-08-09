@@ -33,9 +33,16 @@ Dialog {
         TextSwitch {
             id: screenSaverSwitcher
             checked: clock.displayOn
-            text: qsTr("Turn off screen saver")
+            text: checked ? qsTr("Enable screen saver"):qsTr("Disable screen saver")
             description: qsTr("When activated prevents screen from being turned off.")
 //            onCheckedChanged: sleep.preventSleep = screenSaverSwitcher.checked
+        }
+
+        TextSwitch {
+            id: tickSwitch
+            checked: clock.playTick
+            text: checked ? qsTr("Disable tick"):qsTr("Enable tick")
+            description: qsTr("Play tick on every second if no playlist is selected.")
         }
     }
 
@@ -46,9 +53,11 @@ Dialog {
 
     onAccepted: {
         Storage.setSetting("sleepMode", screenSaverSwitcher.checked)
+        Storage.setSetting("tickMode", tickSwitch.checked)
         Storage.setSetting("randomizer", randomizeSwitcher.checked)
         Storage.setSetting("newTracks", newTrackSwitcher.checked)
         clock.displayOn = screenSaverSwitcher.checked
+        clock.playTick = tickSwitch.checked
         player.random = randomizeSwitcher.checked
         player.newTrack = newTrackSwitcher.checked
     }

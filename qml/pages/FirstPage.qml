@@ -53,7 +53,10 @@ Page {
         if(Storage.getSetting("sleepMode") === "1"){
             clock.displayOn = true
         }
-
+        if(Storage.getSetting("tickMode") === "1"){
+            clock.playTick = true
+            console.log("setting tick mode: on")
+        }
         if(Storage.getSetting("randomizer") === "1")
             player.random = true
         if(Storage.getSetting("newTracks") === "1")
