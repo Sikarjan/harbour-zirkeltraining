@@ -6,6 +6,7 @@
 Name:       harbour-zirkeltraining
 
 # >> macros
+%define __requires_exclude ^libkeepaliveplugin|libkeepalive|libiphb.so.*$
 # << macros
 
 %{!?qtc_qmake:%define qtc_qmake %qmake}
@@ -13,7 +14,7 @@ Name:       harbour-zirkeltraining
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Circuit Training App with your music
-Version:    2.3.0
+Version:    2.3.1
 Release:    1
 Group:      Qt/Qt
 License:    LICENSE
@@ -22,7 +23,6 @@ Source0:    %{name}-%{version}.tar.bz2
 Source100:  harbour-zirkeltraining.yaml
 Requires:   sailfishsilica-qt5 >= 0.10.9
 Requires:   qt5-qtdeclarative-import-particles2
-Requires:   libkeepalive
 BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5Qml)

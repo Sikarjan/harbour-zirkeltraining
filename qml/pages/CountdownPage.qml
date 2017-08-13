@@ -31,7 +31,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import QtQuick.Particles 2.0
-import org.nemomobile.keepalive 1.1
 
 Page {
     id: countdownPage
@@ -64,10 +63,6 @@ Page {
             if(player.random)
                 player.shuffle()
         }
-    }
-
-    KeepAlive {
-        id: keepAlive
     }
 
     NumberAnimation {

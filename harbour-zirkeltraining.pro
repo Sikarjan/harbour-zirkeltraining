@@ -39,11 +39,24 @@ HEADERS += \
     src/audioplayer.h \
     src/chronos.h \
     src/zt.h \
-    src/support.h
+    src/support.h \
+    lib/keepalive/declarativebackgroundactivity.h \
+    lib/keepalive/backgroundactivity.h
 
 RESOURCES += \
     resource.qrc
 
 DISTFILES += \
-    qml/js/storage.js
+    qml/js/storage.js \
+    lib/libkeepaliveplugin.so
 
+INCLUDEPATH += $$PWD/lib/keepalive
+QMAKE_RPATHDIR += /usr/share/harbour-zirkeltraining/lib
+LIBS += -L$$PWD/lib/ -lkeepaliveplugin \
+        -L$$PWD/lib/ -lkeepalive
+
+lib.files += lib/libkeepaliveplugin.so \
+        lib/libkeepalive.so.1.0.0
+
+lib.path = /usr/share/harbour-zirkeltraining/lib
+INSTALLS += lib
