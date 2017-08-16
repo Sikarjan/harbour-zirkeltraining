@@ -29,6 +29,7 @@
 */
 
 import QtQuick 2.0
+import QtMultimedia 5.0
 import Sailfish.Silica 1.0
 
 CoverBackground {
@@ -46,6 +47,11 @@ CoverBackground {
         font.pixelSize: 50
     }
 
+    SoundEffect {
+        id: click
+        source: "qrc:/sounds/click.wav"
+    }
+
     CoverActionList {
         id: coverActionMusic
         enabled: player.isActive && myTime.running
@@ -54,12 +60,15 @@ CoverBackground {
             iconSource: "image://theme/icon-cover-next"
             onTriggered: {
                 player.next()
+                click.play()
             }
         }
 
         CoverAction {
             iconSource: (myTime.pause? "image://theme/icon-cover-play":"image://theme/icon-cover-pause")
             onTriggered: {
+                click.play()
+
                 if(myTime.pause){
                     myTime.pause = false
                 }else{
@@ -82,6 +91,8 @@ CoverBackground {
         CoverAction {
             iconSource: (myTime.pause? "image://theme/icon-cover-play":"image://theme/icon-cover-pause")
             onTriggered: {
+                click.play()
+
                 if(myTime.pause){
                     myTime.pause = false
                 }else{
@@ -99,9 +110,10 @@ CoverBackground {
         CoverAction {
             iconSource: "image://theme/icon-cover-play"
             onTriggered: {
-                pageStack.push(Qt.resolvedUrl("../pages/CountdownPage.qml"), {dataContainer: mainWindow.firstPage})
-                mainWindow.activate()
+                click.play()
 
+                pageStack.push(Qt.resolvedUrl("../pages/CountdownPage.qml"))
+                activate()
             }
         }
     }

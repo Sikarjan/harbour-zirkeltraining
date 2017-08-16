@@ -34,7 +34,7 @@ import QtQuick.LocalStorage 2.0
 import "../js/storage.js" as Storage
 
 Page {
-    id: page
+    id: root
 
     function checkTime(){
         if(trainingStyle.currentIndex === 3){
@@ -134,7 +134,7 @@ Page {
         Column {
             id: column
 
-            width: page.width
+            width: root.width
             spacing: trainingStyle.currentIndex === 0? Theme.paddingMedium:0
 
             PageHeader {

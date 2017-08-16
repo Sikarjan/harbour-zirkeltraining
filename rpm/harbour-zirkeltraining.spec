@@ -14,7 +14,7 @@ Name:       harbour-zirkeltraining
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Circuit Training App with your music
-Version:    2.3.1
+Version:    2.3.2
 Release:    1
 Group:      Qt/Qt
 License:    LICENSE

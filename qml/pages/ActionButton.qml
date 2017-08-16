@@ -2,7 +2,7 @@ import QtQuick 2.0
 import QtMultimedia 5.0
 
 Rectangle {
-    id: root
+    id: buttonRoot
     // export button properties
     property alias text: label.text
     property alias icon: image.source
@@ -47,7 +47,7 @@ Rectangle {
         interval: animTime
         onTriggered: {
             image.scale = 1
-            root.clicked()
+            buttonRoot.clicked()
         }
     }
     SoundEffect {

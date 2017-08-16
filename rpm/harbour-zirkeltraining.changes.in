@@ -7,6 +7,13 @@
 
 # * date Author's Name <author's email> version-release
 # - Summary of changes
+* Tue Aug 16 2017 Flor707 <store@innobiz.de> 2.3.2-1
+- [Bug] Fixed cover action start countdown not working
+- [Improved] Added click-sound to cover actions
+
+* Tue Aug 14 2017 Flor707 <store@innobiz.de> 2.3.1-1
+- [Improved] Included libkeepalive in app
+
 * Tue Aug 08 2017 Flor707 <store@innobiz.de> 2.3.0-1
 - [Improved] switched to libkeepalive to prevent phone from going into sleep while the counter is running
 - [new] made tick sound with every secon, if no music is playing, optional

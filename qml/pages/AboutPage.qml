@@ -4,7 +4,7 @@ import Sailfish.Silica 1.0
 import harbour.zirkeltraining 1.0
 
 Page {
-    id: page
+    id: aboutPage
 
     SilicaFlickable {
         anchors.fill: parent
