@@ -43,10 +43,6 @@ ApplicationWindow
         id: zt
     }
 
-    KeepAlive {
-        id: keepAlive
-    }
-
     AudioPlayer {
         id: player
 

@@ -6,7 +6,6 @@
 Name:       harbour-zirkeltraining
 
 # >> macros
-%define __requires_exclude ^libkeepaliveplugin|libkeepalive|libiphb.so.*$
 # << macros
 
 %{!?qtc_qmake:%define qtc_qmake %qmake}
@@ -14,7 +13,7 @@ Name:       harbour-zirkeltraining
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Circuit Training App with your music
-Version:    2.3.1
+Version:    1.0.0
 Release:    1
 Group:      Qt/Qt
 License:    LICENSE

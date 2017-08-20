@@ -48,7 +48,7 @@ Page {
                 applause.stop()
                 Support.setBlankingMode(false)
                 keepDisplayOn.running = false
-                keepAlive.enabled = false
+//                keepAlive.enabled = false
             }
         }else if(status === PageStatus.Activating){
             keepDisplayOn.running = true
@@ -57,7 +57,7 @@ Page {
 
     Component.onCompleted: {
         myTime.running = true
-        keepAlive.enabled = true
+//        keepAlive.enabled = true
         if(player.playlist !== ""){
             player.setSource(player.playlist)
             if(player.random)
@@ -69,7 +69,7 @@ Page {
         id: animateOpacity
         target: display
         property: "opacity"
-        running: clock.time < 6
+        running: clock.time < 6 && Qt.application.state === Qt.ApplicationActive
         from: 0.1
         to: 1.0
         duration: 1000
@@ -209,7 +209,7 @@ Page {
         ParticleSystem {
             id: confetti
             anchors.fill: parent
-            running: applauseTime.running
+            running: applauseTime.running && Qt.application.state === Qt.ApplicationActive
 
             ImageParticle {
                 source: "qrc:/images/particle.png"
