@@ -37,7 +37,6 @@
 #include "chronos.h"
 #include "support.h"
 #include "zt.h"
-#include "declarativebackgroundactivity.h"
 
 #include <QDir>
 
@@ -63,7 +62,6 @@ int main(int argc, char *argv[])
     qmlRegisterType<AudioPlayer, 1>("harbour.zirkeltraining", 1, 0,"AudioPlayer");
     qmlRegisterType<Chronos, 1>("harbour.zirkeltraining", 1, 0, "Chronos");
     qmlRegisterType<ZT, 1>("harbour.zirkeltraining", 1, 0, "ZT");
-    qmlRegisterType<DeclarativeKeepAlive, 1>("harbour.zirkeltraining", 1, 0, "KeepAlive");
 
     view->setSource(SailfishApp::pathTo("qml/harbour-zirkeltraining.qml"));
     view->show();

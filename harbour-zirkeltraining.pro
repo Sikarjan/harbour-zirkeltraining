@@ -40,23 +40,25 @@ HEADERS += \
     src/chronos.h \
     src/zt.h \
     src/support.h \
-    lib/keepalive/declarativebackgroundactivity.h \
-    lib/keepalive/backgroundactivity.h
+    libKeepAlive/backgroundactivity.h
 
 RESOURCES += \
     resource.qrc
 
 DISTFILES += \
     qml/js/storage.js \
-    lib/libkeepaliveplugin.so
+    libKeepAlive/libkeepalive.so.1.0.0
 
-INCLUDEPATH += $$PWD/lib/keepalive
+# Including the pro file did not work. During rpm build an error occurrs that an unknown file could not be found.
+# Therefore the keepAlive was packaged in a shared lib which is included below.
+#TEMPLATE = subdirs
+#SUBDIRS = libKeepAlive
+
+INCLUDEPATH += $$PWD/libKeepAlive
 QMAKE_RPATHDIR += /usr/share/harbour-zirkeltraining/lib
-LIBS += -L$$PWD/lib/ -lkeepaliveplugin \
-        -L$$PWD/lib/ -lkeepalive
+LIBS += -L$$PWD/libKeepAlive/ -lkeepalive
 
-lib.files += lib/libkeepaliveplugin.so \
-        lib/libkeepalive.so.1.0.0
-
+lib.files += libKeepAlive/libkeepalive.so.1.0.0
 lib.path = /usr/share/harbour-zirkeltraining/lib
+
 INSTALLS += lib

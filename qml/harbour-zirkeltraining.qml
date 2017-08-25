@@ -42,11 +42,7 @@ ApplicationWindow
     ZT {
         id: zt
     }
-
-    KeepAlive {
-        id: keepAlive
-    }
-
+    
     AudioPlayer {
         id: player
 
@@ -63,7 +59,6 @@ ApplicationWindow
         property bool profileChanged: false
         property string profileTitel: ''
 
-        // Titel anpassen wenn Programm verändert wurde
         onProfileChangedChanged: {
             console.log('Current profile changed? '+profileChanged)
             if (profileChanged === true && profile.profileID !== -1) {
