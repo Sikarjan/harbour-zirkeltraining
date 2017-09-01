@@ -48,7 +48,7 @@ Page {
                 applause.stop()
                 Support.setBlankingMode(false)
                 keepDisplayOn.running = false
-//                keepAlive.enabled = false
+                keepAlive.enabled = false
             }
         }else if(status === PageStatus.Activating){
             keepDisplayOn.running = true
@@ -57,7 +57,7 @@ Page {
 
     Component.onCompleted: {
         myTime.running = true
-//        keepAlive.enabled = true
+        keepAlive.enabled = true
         if(player.playlist !== ""){
             player.setSource(player.playlist)
             if(player.random)

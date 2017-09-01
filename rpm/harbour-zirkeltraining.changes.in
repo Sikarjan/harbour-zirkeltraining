@@ -1,4 +1,7 @@
 # - Summary of changes
+* Thu Aug 30 2017 FloR707 <store@innobiz.de> 2.3.4-1
+- [Improved] exchanged shared lib keep alive with official one
+
 * Fri Aug 25 2017 FloR707 <store@innobiz.de> 2.3.3-1
 - [new] Added keepAlive shared library to project
 

@@ -34,6 +34,7 @@ import QtMultimedia 5.0
 import "pages"
 
 import harbour.zirkeltraining 1.0
+import org.nemomobile.keepalive 1.1
 
 ApplicationWindow
 {
@@ -65,6 +66,10 @@ ApplicationWindow
                  profileTitel = profileTitel+"*"
              }
         }
+    }
+
+    KeepAlive {
+        id: keepAlive
     }
 
     Item {

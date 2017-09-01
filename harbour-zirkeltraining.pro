@@ -5,6 +5,8 @@ CONFIG += sailfishapp
 QT += multimedia \
     dbus
 
+PKGCONFIG += keepalive
+
 SOURCES += src/harbour-zirkeltraining.cpp \
     src/audioplayer.cpp \
     src/chronos.cpp \
@@ -39,26 +41,10 @@ HEADERS += \
     src/audioplayer.h \
     src/chronos.h \
     src/zt.h \
-    src/support.h \
-    libKeepAlive/backgroundactivity.h
+    src/support.h
 
 RESOURCES += \
     resource.qrc
 
 DISTFILES += \
     qml/js/storage.js \
-    libKeepAlive/libkeepalive.so.1.0.0
-
-# Including the pro file did not work. During rpm build an error occurrs that an unknown file could not be found.
-# Therefore the keepAlive was packaged in a shared lib which is included below.
-#TEMPLATE = subdirs
-#SUBDIRS = libKeepAlive
-
-INCLUDEPATH += $$PWD/libKeepAlive
-QMAKE_RPATHDIR += /usr/share/harbour-zirkeltraining/lib
-LIBS += -L$$PWD/libKeepAlive/ -lkeepalive
-
-lib.files += libKeepAlive/libkeepalive.so.1.0.0
-lib.path = /usr/share/harbour-zirkeltraining/lib
-
-INSTALLS += lib
