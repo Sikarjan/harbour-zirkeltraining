@@ -31,6 +31,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import QtQuick.Particles 2.0
+import Nemo.KeepAlive 1.1
+import "../js/storage.js" as Storage
 
 Page {
     id: countdownPage
@@ -46,12 +48,16 @@ Page {
                 clock.iniStart = true
                 confetti.running = false
                 applause.stop()
-                Support.setBlankingMode(false)
-                keepDisplayOn.running = false
+                DisplayBlanking.preventBlanking = false
                 keepAlive.enabled = false
+
+                if(exerciseModel.count > 0){
+                    Storage.initialize()
+                    Storage.loadExerciseList(profile.profileID)
+                }
             }
         }else if(status === PageStatus.Activating){
-            keepDisplayOn.running = true
+            DisplayBlanking.preventBlanking = clock.displayOn
         }
     }
 
@@ -103,7 +109,7 @@ Page {
 
         Text {
             id: display
-            visible: clock.cycles !== 0? true:false
+            visible: clock.cycles !== 0
             anchors.centerIn: parent
             text: (clock.time < 1? 0:clock.time)
             color: (clock.time < 6? "red" : "white")
@@ -119,7 +125,7 @@ Page {
 
         Text {
             id: finsh
-            visible: clock.cycles === 0? true:false
+            visible: clock.cycles === 0
             anchors.centerIn: parent
             text: qsTr("You have done it!")
             color: "white"
@@ -128,6 +134,24 @@ Page {
 
             // triggers final animation
             onVisibleChanged: visible === true? applauseTime.running = true:applauseTime.running = false
+        }
+
+
+        Item {
+            id: exercise
+            visible: exerciseModel.count > 0 && clock.cycles !== 0
+            width: parent.width - 2*Theme.paddingMedium
+            anchors.top: display.bottom
+            anchors.bottom: nav.top
+
+            Text {
+                anchors.centerIn: parent
+                wrapMode: Text.WordWrap
+                color: "white"
+                font.pixelSize: 60
+
+                text: clock.exercise
+            }
         }
 
         Row {

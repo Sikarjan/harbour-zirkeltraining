@@ -10,8 +10,7 @@ PKGCONFIG += keepalive
 SOURCES += src/harbour-zirkeltraining.cpp \
     src/audioplayer.cpp \
     src/chronos.cpp \
-    src/zt.cpp \
-    src/support.cpp
+    src/zt.cpp
 
 OTHER_FILES += qml/harbour-zirkeltraining.qml \
     qml/cover/CoverPage.qml \
@@ -40,11 +39,11 @@ TRANSLATIONS += translations/harbour-zirkeltraining-de.ts
 HEADERS += \
     src/audioplayer.h \
     src/chronos.h \
-    src/zt.h \
-    src/support.h
+    src/zt.h
 
 RESOURCES += \
     resource.qrc
 
 DISTFILES += \
     qml/js/storage.js \
+    qml/pages/ExercisePage.qml

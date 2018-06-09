@@ -88,7 +88,7 @@ Page {
                         leftMargin: Theme.paddingLarge
                     }
                     anchors.top: nameLabel.bottom
-                    property variant styles: [qsTr("Static"), qsTr("Pyramid"),  qsTr("Raising"), qsTr("Falling"), qsTr("Zick zack")]
+                    property variant styles: [qsTr("Static"), qsTr("Pyramid"),  qsTr("Raising"), qsTr("Falling"), qsTr("Zick zack"), qsTr("Custom")]
                     text: qsTr("Training Style: ")+styles[mode]+qsTr(" - Training time: ")+training
                     font.pixelSize: Theme.fontSizeSmall
                     color: profileItem.highlighted ? Theme.highlightColor : Theme.primaryColor

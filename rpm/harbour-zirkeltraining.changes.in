@@ -1,4 +1,12 @@
 # - Summary of changes
+* Sat Jun 09 2018 FloR707 <store@innobiz.de> 3.0.0-1
+- [new] Custom mode added
+- [new] Option to add a exercise to each cycle
+- [Improved] About page with more details on the app
+- [Improved] Switched to Nemo.KeepAlive 1.1
+- Fixed bug that prevented to change the exercise style on a saved exercise
+- Fixed bug that set wrong recover time in style pyramid
+
 * Thu Aug 30 2017 FloR707 <store@innobiz.de> 2.3.4-1
 - [Improved] exchanged shared lib keep alive with official one
 

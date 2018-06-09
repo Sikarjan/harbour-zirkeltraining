@@ -36,6 +36,8 @@ import "../js/storage.js" as Storage
 Page {
     id: root
 
+    property int lastProfileId: -1
+
     function checkTime(){
         if(trainingStyle.currentIndex === 3){
             var testValue = trainingSlider.value
@@ -78,12 +80,18 @@ Page {
     }
     // Load Profile
     onStatusChanged: if (status === PageStatus.Active) {
-                         if(profile.profileID !== -1 && !profile.profileChanged) {
+                         if(profile.profileID !== lastProfileId) {
+                             lastProfileId = profile.profileID
                              console.log("Loading Profile: "+profile.profileID)
                              Storage.loadProfile(profile.profileID)
+                             Storage.loadExerciseList(profile.profileID)
                              profile.profileChanged = false
                          }else if(!profile.profileChanged){
                              profile.profileTitel = qsTr("Make your settings:")
+                         }
+
+                         if(profile.cycles > cycleSlider.value){
+                             cycleSlider.value = profile.cycles
                          }
                      }
 
@@ -104,6 +112,12 @@ Page {
 
         PushUpMenu {
             MenuItem {
+                text: qsTr("Load profile")
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl("Load.qml"))
+                }
+            }
+            MenuItem {
                 text:  qsTr("Save as new profile")
                 onClicked: {
                     Storage.writeProfile('save');
@@ -116,26 +130,22 @@ Page {
                 onClicked: {
                     Storage.writeProfile('save')
                     Storage.updateProfile(profile.profileID)
+                    Storage.saveExerciseList(profile.profileID)
                     profile.profileChanged = false
                     profile.profileTitel = profile.profileTitel.substring(0,profile.profileTitel.length-1)
-                }
-            }
-            MenuItem {
-                text: qsTr("Load profile")
-                onClicked: {
-                    pageStack.push(Qt.resolvedUrl("Load.qml"))
                 }
             }
         }
 
         // Tell SilicaFlickable the height of its content.
         contentHeight: column.height
+        VerticalScrollDecorator {}
 
         Column {
             id: column
 
             width: root.width
-            spacing: trainingStyle.currentIndex === 0? Theme.paddingMedium:0
+            spacing: Theme.paddingMedium
 
             PageHeader {
                 title: qsTr("Zirkeltraining")
@@ -163,12 +173,14 @@ Page {
                     MenuItem { text: qsTr("Raising")}
                     MenuItem { text: qsTr("Falling")}
                     MenuItem { text: qsTr("Zick zack")}
+                    MenuItem { text: qsTr("Custom")}
                 }
-                onMenuChanged: profile.profileChanged = true
+                onCurrentIndexChanged: profile.profileChanged = true
             }
 
             Slider {
                 id: trainingSlider
+                visible: trainingStyle.currentIndex < 5
                 width: parent.width
                 label: qsTr("Training Cycle Time")
                 value: 30
@@ -184,6 +196,7 @@ Page {
 
             Slider {
                 id: recoverSlider
+                visible: trainingStyle.currentIndex < 5
                 width: parent.width
                 label: qsTr("Recover Cycle Time")
                 value: 10
@@ -207,7 +220,7 @@ Page {
 
             Slider {
                 id: adjustmentSlider
-                visible: trainingStyle.currentIndex !== 0
+                visible: trainingStyle.currentIndex > 0 && trainingStyle.currentIndex < 5
                 width: parent.width
                 label: trainingStyle.currentIndex ===3? qsTr("Decrease Training Time"):qsTr("Increase Training Time")
                 value: 10
@@ -223,12 +236,12 @@ Page {
 
             Slider {
                 id: adjustmentSliderPause
-                visible: trainingStyle.currentIndex !== 0
+                visible: trainingStyle.currentIndex !== 0 && trainingStyle.currentIndex < 5
                 width: parent.width
-                label: trainingStyle.currentIndex ===3? qsTr("Decrease Pause Time"):qsTr("Increase Pause Time")
+                label: trainingStyle.currentIndex === 3 ? qsTr("Decrease Pause Time"):qsTr("Increase Pause Time")
                 value: 10
                 minimumValue: 5
-                maximumValue: trainingStyle.currentIndex ===3? recoverSlider.value:600
+                maximumValue: trainingStyle.currentIndex === 3 ? recoverSlider.value:600
                 stepSize: 5
                 valueText: value
                 onValueChanged: {
@@ -250,16 +263,118 @@ Page {
                 onClicked: pageStack.push(Qt.resolvedUrl("Playlist.qml"))
             }
 
+            SilicaListView {
+                id: exerciseList
+                width: parent.width -2*Theme.paddingMedium
+                height: Theme.itemSizeSmall * (exerciseModel.count > 3 ? 3:exerciseModel.count) + Theme.fontSizeLarge + Theme.paddingMedium
+                x: Theme.paddingMedium
+                visible: exerciseModel.count > 0
+                clip: true
+
+                VerticalScrollDecorator {}
+
+                model: exerciseModel
+
+                header: Label {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    font.pixelSize: Theme.fontSizeLarge
+                    text: qsTr("Exercise List")
+                }
+
+                delegate: ListItem {
+                    Row {
+                        width: exerciseList.width
+                        spacing: Theme.paddingSmall
+
+                        Rectangle {
+                            id: numberBlock
+                            anchors.verticalCenter: parent.verticalCenter
+                            height: Theme.itemSizeSmall - Theme.paddingMedium
+                            width: numberLabel.width + 2*Theme.paddingMedium
+                            radius: 5
+
+                            color: Theme.secondaryColor
+                            Label {
+                                anchors.centerIn: parent
+                                id: numberLabel
+                                text: (exerciseModel.count > 9 ? "0":"") + (index+1)
+                            }
+                        }
+
+                        Column {
+                            width: parent.width - numberBlock.width - Theme.paddingMedium
+                            Row {
+                                spacing: Theme.paddingSmall
+                                Label {
+                                    text: qsTr("Exercise") + ": " + training +"s"
+                                }
+
+                                Label {
+                                    text: qsTr("Pause") + ": " + recover +"s"
+                                }
+                            }
+
+                            Label {
+                                width: parent.width
+                                truncationMode: TruncationMode.Fade
+
+                                text: exercise
+                            }
+                        }
+                    }
+                }
+            }
+
+            Row {
+                anchors.right: parent.right
+                spacing: Theme.paddingSmall
+
+                Label {
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: (exerciseModel.count > 0 ? qsTr("Modify"):qsTr("Add")) + " " + qsTr("exercise list")
+                }
+
+                IconButton {
+                    id: addExerciseButton
+                    icon.source: "image://theme/icon-m-add?" + (pressed
+                                                                 ? Theme.highlightColor
+                                                                 : Theme.primaryColor)
+                    onClicked: {
+                        pageStack.push(Qt.resolvedUrl("ExercisePage.qml"),{
+                                           profileID: profile.profileID,
+                                           tStyle: trainingStyle.currentIndex,
+                                           cycles: cycleSlider.value,
+                                           training: trainingSlider.value,
+                                           recover: recoverSlider.value,
+                                           tAdjust: adjustmentSlider.value,
+                                           rAdjust: adjustmentSliderPause.value
+                                       })
+                    }
+                }
+            }
+
 
             Button {
                 id: start
-                visible: cycleSlider.value > 0
+                visible: (exerciseModel.count === 0 && trainingStyle.currentIndex < 5) || (exerciseModel.count > 0 && profile.profileChanged === false)
                 anchors.horizontalCenter: parent.horizontalCenter
+                anchors.bottomMargin: Theme.paddingLarge
                 text: qsTr("Start")
                 onClicked: {
                     Storage.writeProfile('start')
                     pageStack.push(Qt.resolvedUrl("CountdownPage.qml"))
                 }
+            }
+
+            Text {
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.margins: Theme.paddingMedium
+                width: parent.width - 2*Theme.paddingMedium
+                color: Theme.highlightColor
+                font.pixelSize: Theme.fontSizeLarge
+                visible: !start.visible
+                wrapMode: Text.Wrap
+                text: qsTr("Save changes to your profile prior start.")
             }
         }
     }

@@ -10,10 +10,7 @@ function initialize() {
                 function(tx) {
                     tx.executeSql('CREATE TABLE IF NOT EXISTS'+
                                   ' settings(setting TEXT UNIQUE, value TEXT)');
-                });
 
-    db.transaction(
-                function(tx) {
                     tx.executeSql('CREATE TABLE IF NOT EXISTS profiles ('+
                                   'name TEXT,' +
                                   'training INTEGER,' +
@@ -22,9 +19,16 @@ function initialize() {
                                   'mode INTEGER,' +
                                   'adjust INTEGER,'  +
                                   'adjustPause INTEGER)');
+
+                    tx.executeSql('CREATE TABLE IF NOT EXISTS exercise ('+
+                                  'refId INTEGER,' +
+                                  'pos INTEGER,' +
+                                  'training INTEGER,' +
+                                  'recover INTEGER,' +
+                                  'exercise TEXT)');
                 });
 
-    fieldMissing(db);
+//    fieldMissing(db);
 }
 
 function fieldMissing(db){
@@ -34,12 +38,24 @@ function fieldMissing(db){
     });
     var value = res.rows.length;
 
-    if(value < 7){
+    if(value < 8){
         db.transaction(
                     function(tx) {
-                        tx.executeSql('ALTER TABLE profiles ADD COLUMN adjustPause INTEGER DEFAULT 10');
+                        tx.executeSql('ALTER TABLE profiles RENAME TO profiles_tmp');
+                        tx.executeSql('CREATE TABLE profiles ('+
+                                      'name TEXT,' +
+                                      'training INTEGER,' +
+                                      'recover INTEGER,' +
+                                      'cycles INTEGER,' +
+                                      'mode INTEGER,' +
+                                      'adjust INTEGER,'  +
+                                      'adjustPause INTEGER)');
+                        tx.executeSql('INSERT INTO '+
+                                        'profiles(name, training, recover, cycles, mode, adjust, adjustPause) '+
+                                       'SELECT name, training, recover, cycles, mode, adjust, adjustPause FROM profiles_tmp');
+                        tx.executeSql('DROP TABLE profiles_tmp');
                     });
-        console.log('Field adjustPause added.');
+        console.log('Field id added.');
     }
 
 }
@@ -163,6 +179,9 @@ function writeProfile(mode) {
     clock.cycles = cycleSlider.value;
     clock.adjustmentTime = adjustmentSlider.value;
     clock.adjustmentTimePause = adjustmentSliderPause.value;
+    if(exerciseModel.count > 0){
+        clock.exercise = exerciseModel.get(0).exercise
+    }
 
     if(mode === 'start'){
         switch (trainingStyle.currentIndex){
@@ -173,6 +192,52 @@ function writeProfile(mode) {
         case 4: // Zig Zag
             clock.tipCycle = 1;
             break;
+        case 5: // Custom
+            clock.trainingTime = exerciseModel.get(0).training
+            clock.holdTime = exerciseModel.get(0).recover
         }
     }
+}
+
+// Load exercise list
+function loadExerciseList(index) {
+    var db = getDatabase();
+
+    db.transaction(function(tx) {
+        var rs = tx.executeSql('SELECT * FROM exercise WHERE refId = ? ORDER BY pos;', [index]);
+        if(rs.rows.length > 0){
+            exerciseModel.clear()
+        }else{
+            return
+        }
+
+        for (var i = 0; i < rs.rows.length; i++) {
+            exerciseModel.append({
+                "training": rs.rows.item(i).training,
+                "recover": rs.rows.item(i).recover,
+                "exercise": rs.rows.item(i).exercise
+            })
+        }
+    })
+}
+
+function saveExerciseList(index) {
+    if(exerciseModel.count < 1)
+        return;
+
+    var db = getDatabase();
+    var res = "";
+
+    db.transaction(function(tx) {
+        tx.executeSql('DELETE FROM exercise WHERE refId = ?;', [index]);
+
+        for(var i=0; i<exerciseModel.count; i++ ){
+            var rs = tx.executeSql('INSERT INTO exercise'+
+                                   ' VALUES (?,?,?,?,?);', [index, i, exerciseModel.get(i).training, exerciseModel.get(i).recover, exerciseModel.get(i).exercise]);
+            if (rs.rowsAffected < 1) {
+                res = "NOK";
+            }
+        }
+    });
+    return res;
 }

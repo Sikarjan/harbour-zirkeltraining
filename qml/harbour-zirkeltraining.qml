@@ -34,7 +34,7 @@ import QtMultimedia 5.0
 import "pages"
 
 import harbour.zirkeltraining 1.0
-import org.nemomobile.keepalive 1.1
+import Nemo.KeepAlive 1.1
 
 ApplicationWindow
 {
@@ -59,9 +59,10 @@ ApplicationWindow
         property int profileID: -1
         property bool profileChanged: false
         property string profileTitel: ''
+        property int cycles
 
         onProfileChangedChanged: {
-            console.log('Current profile changed? '+profileChanged)
+//            console.log('Current profile changed? '+profileChanged)
             if (profileChanged === true && profile.profileID !== -1) {
                  profileTitel = profileTitel+"*"
              }
@@ -90,6 +91,7 @@ ApplicationWindow
         property string statusText: qsTr("Get ready!")
         property bool displayOn: false
         property bool playTick: false
+        property string exercise: ""
 
         states: [
             State {
@@ -160,7 +162,7 @@ ApplicationWindow
                 clock.time = myTime.getTime()
 
                 if(clock.time != clock.last){
-                    console.log(clock.time+" clock State: "+clock.state+" Running: "+myTime.running)
+//                    console.log(clock.time+" clock State: "+clock.state+" Running: "+myTime.running)
                     clock.last = clock.time
                 }
 
@@ -182,19 +184,42 @@ ApplicationWindow
                     if(clock.trainingPhase){
                         clock.trainingPhase = false
                         myTime.setNewTime(clock.holdTime)
+
+                        if(exerciseModel.count > 1){
+                            if(clock.tStyle === 1 && clock.cycles < clock.tipCycle){
+                                clock.exercise = exerciseModel.get(exerciseModel.count -1).exercise
+                            }else{
+                                clock.exercise = exerciseModel.get(1).exercise
+                            }
+                        }
                     }else{
                         if(clock.iniStart){
                             clock.iniStart = false
                         }else{
-                            // recover phase is over new times need to be set
+                            console.log("New Cylcle: "+clock.cycles)
+                            // recover phase is over
+                            if(exerciseModel.count > 0){
+                                if(clock.tStyle === 1 && clock.cycles < clock.tipCycle){
+                                    exerciseModel.move(exerciseModel.count-1, 0, 1)
+                                }else{
+                                    exerciseModel.move(0, exerciseModel.count-1, 1)
+                                }
+
+/*                                for(var i = 0; i < exerciseModel.count; i++){
+                                    console.log(exerciseModel.get(i).exercise)
+                                }*/
+                            }
+
+                            // new times need to be set
                             switch (clock.tStyle) {
                             case 1: // Pyramid
                                 if(clock.cycles < clock.tipCycle && clock.adjustmentTime > 0){
                                     clock.adjustmentTime = clock.adjustmentTime*-1
-                                    clock.adjustmentTime = clock.adjustmentTimePause*-1
+                                    clock.adjustmentTimePause = clock.adjustmentTimePause*-1
                                 }
                                 clock.holdTime = clock.holdTime+clock.adjustmentTimePause
                                 clock.trainingTime = clock.trainingTime+clock.adjustmentTime
+                                console.log(clock.holdTime + ": "+clock.trainingTime)
                                 break;
                             case 2: // Raising
                                 clock.holdTime = clock.holdTime+clock.adjustmentTimePause
@@ -209,6 +234,9 @@ ApplicationWindow
                                 clock.trainingTime = clock.trainingTime+clock.adjustmentTime*clock.tipCycle
                                 clock.tipCycle = -1*clock.tipCycle
                                 break;
+                            case 5: // Custom
+                                clock.holdTime = exerciseModel.get(0).recover
+                                clock.trainingTime = exerciseModel.get(0).training
                             }
                         }
 
@@ -242,8 +270,10 @@ ApplicationWindow
             interval: 15000
             running: false
             repeat: true
+        }
 
-            onTriggered: Support.setBlankingMode(clock.displayOn)
+        ListModel {
+            id: exerciseModel
         }
     }
 

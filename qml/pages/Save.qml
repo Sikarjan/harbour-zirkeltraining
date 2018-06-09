@@ -13,15 +13,18 @@ Dialog {
 
     canAccept: nameInput.text.length > 0 && nameInput.text.length < 26
 
-    Column {
-        width: savePage.width - 2*Theme.paddingLarge
-        spacing: 2
-        anchors.horizontalCenter: parent.horizontalCenter
+    DialogHeader {
+        id: header
+        acceptText: qsTr("Save profile")
+        cancelText: qsTr("Cancel")
+    }
 
-        DialogHeader {
-            acceptText: qsTr("Save profile")
-            cancelText: qsTr("Cancel")
-        }
+    Column {
+        width: savePage.width - 2*Theme.paddingMedium
+        spacing: 2
+        anchors.top: header.bottom
+        anchors.topMargin: Theme.paddingLarge
+        x: Theme.paddingMedium
 
         TextField {
             id: nameInput
@@ -49,6 +52,7 @@ Dialog {
 
     onAccepted: {
         profile.profileID = Storage.saveProfile(nameInput.text, clock.trainingTime, clock.holdTime, clock.cycles, clock.tStyle, clock.adjustmentTime, clock.adjustmentTimePause)
+        Storage.saveExerciseList(profile.profileID)
         profile.profileChanged = false
     }
 }
