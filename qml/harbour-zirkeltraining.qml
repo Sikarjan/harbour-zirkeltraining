@@ -92,6 +92,7 @@ ApplicationWindow
         property bool displayOn: false
         property bool playTick: false
         property string exercise: ""
+        property string nextExercise: ""
 
         states: [
             State {
@@ -182,32 +183,38 @@ ApplicationWindow
                     }
                 }else if(clock.time <= -1){
                     if(clock.trainingPhase){
+                        // Training Phase over
                         clock.trainingPhase = false
                         myTime.setNewTime(clock.holdTime)
 
-                        if(exerciseModel.count > 1){
+                        // Cycle excercise
+                        if(exerciseModel.count > 0){
                             if(clock.tStyle === 1 && clock.cycles < clock.tipCycle){
-                                clock.exercise = exerciseModel.get(exerciseModel.count -1).exercise
+                                exerciseModel.move(exerciseModel.count-1, 0, 1)
                             }else{
-                                clock.exercise = exerciseModel.get(1).exercise
+                                exerciseModel.move(0, exerciseModel.count-1, 1)
                             }
                         }
+
                     }else{
                         if(clock.iniStart){
                             clock.iniStart = false
                         }else{
-                            console.log("New Cylcle: "+clock.cycles)
                             // recover phase is over
-                            if(exerciseModel.count > 0){
-                                if(clock.tStyle === 1 && clock.cycles < clock.tipCycle){
-                                    exerciseModel.move(exerciseModel.count-1, 0, 1)
-                                }else{
-                                    exerciseModel.move(0, exerciseModel.count-1, 1)
-                                }
+                            console.log("New Cylcle: "+clock.cycles)
 
-/*                                for(var i = 0; i < exerciseModel.count; i++){
-                                    console.log(exerciseModel.get(i).exercise)
-                                }*/
+                            // Update exercise texts
+                            if(exerciseModel.count === 1){
+                                clock.exercise = exerciseModel.get(0).exercise
+                                clock.nextExercise = exerciseModel.get(0).exercise
+                            }else if(exerciseModel.count > 1){
+                                if(clock.tStyle === 1 && clock.cycles < clock.tipCycle){
+                                    clock.exercise = exerciseModel.get(exerciseModel.count).exercise
+                                    clock.nextExercise = exerciseModel.get(exerciseModel.count -1).exercise
+                                }else{
+                                    clock.exercise = exerciseModel.get(0).exercise
+                                    clock.nextExercise = exerciseModel.get(1).exercise
+                                }
                             }
 
                             // new times need to be set
@@ -243,8 +250,10 @@ ApplicationWindow
                         clock.trainingPhase = true
                         myTime.setNewTime(clock.trainingTime)
 
-                        if(player.isActive)
-                            player.play()
+                        if(player.isActive){
+                            var pState = player.play()
+                            console.log("Starting Player with state: "+pState)
+                        }
                     }
                 }
 

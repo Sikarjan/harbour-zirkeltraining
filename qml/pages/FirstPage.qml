@@ -331,7 +331,7 @@ Page {
 
                 Label {
                     anchors.verticalCenter: parent.verticalCenter
-                    text: (exerciseModel.count > 0 ? qsTr("Modify"):qsTr("Add")) + " " + qsTr("exercise list")
+                    text: (exerciseModel.count > 0 ? qsTr("Modify exercise list"):qsTr("Add an exercise list"))
                 }
 
                 IconButton {
@@ -358,7 +358,6 @@ Page {
                 id: start
                 visible: (exerciseModel.count === 0 && trainingStyle.currentIndex < 5) || (exerciseModel.count > 0 && profile.profileChanged === false)
                 anchors.horizontalCenter: parent.horizontalCenter
-                anchors.bottomMargin: Theme.paddingLarge
                 text: qsTr("Start")
                 onClicked: {
                     Storage.writeProfile('start')
@@ -375,6 +374,10 @@ Page {
                 visible: !start.visible
                 wrapMode: Text.Wrap
                 text: qsTr("Save changes to your profile prior start.")
+            }
+
+            Rectangle {
+                height: Theme.paddingLarge
             }
         }
     }

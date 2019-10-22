@@ -31,6 +31,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import QtQuick.Particles 2.0
+import "../components"
 import Nemo.KeepAlive 1.1
 import "../js/storage.js" as Storage
 
@@ -137,20 +138,32 @@ Page {
         }
 
 
-        Item {
+        Column {
             id: exercise
             visible: exerciseModel.count > 0 && clock.cycles !== 0
             width: parent.width - 2*Theme.paddingMedium
             anchors.top: display.bottom
             anchors.bottom: nav.top
+            spacing: Theme.paddingMedium
 
             Text {
-                anchors.centerIn: parent
+                id: currentEx
+                anchors.horizontalCenter: parent.horizontalCenter
                 wrapMode: Text.WordWrap
                 color: "white"
-                font.pixelSize: 60
+                font.pixelSize: clock.trainingPhase? 60:0
 
                 text: clock.exercise
+            }
+
+            Text {
+                id: nextEx
+                anchors.horizontalCenter: parent.horizontalCenter
+                wrapMode: Text.WordWrap
+                color: "white"
+                font.pixelSize: clock.trainingPhase? 30:60
+
+                text: qsTr("Next") + ": " + clock.nextExcercise
             }
         }
 

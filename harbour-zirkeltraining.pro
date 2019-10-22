@@ -25,7 +25,7 @@ OTHER_FILES += qml/harbour-zirkeltraining.qml \
     qml/pages/Settings.qml \
     qml/js/storage.js \
     qml/pages/Playlist.qml \
-    qml/pages/ActionButton.qml \
+    qml/components/ActionButton.qml \
     qml/pages/Save.qml \
     qml/pages/Load.qml
 

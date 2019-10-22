@@ -134,7 +134,7 @@
     </message>
     <message>
         <source> exercises.</source>
-        <translation> Übungen</translation>
+        <translation> Übungen.</translation>
     </message>
     <message>
         <source>Exercise list will be reapeated </source>
@@ -382,7 +382,7 @@
     </message>
     <message>
         <source>Training time: </source>
-        <translation>Trainingszeit:</translation>
+        <translation>Trainingszeit: </translation>
     </message>
     <message>
         <source>The profile name should be unique and not be longer than 25 characters. It is not possible to change the profile name.</source>

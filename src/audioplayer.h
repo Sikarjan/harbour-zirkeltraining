@@ -21,7 +21,7 @@ public:
     Q_INVOKABLE bool setSource(const QString &source);
 
 public slots:
-    void play();
+    int play();
     void pause();
     void stop();
     void next();
