@@ -38,6 +38,10 @@
         <source>You have done it!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Next</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CoverPage</name>
@@ -272,19 +276,15 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Modify</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>exercise list</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Save changes to your profile prior start.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Modify exercise list</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add an exercise list</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

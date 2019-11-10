@@ -25,7 +25,7 @@
     </message>
     <message>
         <source>&lt;p&gt;&lt;b&gt;Pyramid&lt;/b&gt;&lt;br&gt;For the pyramid mode, looking linke this /\, you only have to add the details for the raising part. The decreasing part will be a copy of the raising part. This is also true for the exercises. The exercise list will be worked backwards on the decreasing part.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Custom&lt;/b&gt;&lt;br&gt;To use the custom mode you are required to add exercise list. Here you can define training and recovery time for each exercise.&lt;/p&gt;</source>
-        <translation>&lt;p&gt;&lt;b&gt;Pyramide&lt;/b&gt;&lt;br&gt;Im Pyramidenmodus müssen nur Angaben für den steigenden Arm gemacht werden. Der Fallende ist eine Kopie des Steigenden. Dies gilt auch für die Übungsliste. Im fallenden Arm wird die Übungsliste rückwärest abgearbeitet.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Custom&lt;/b&gt;&lt;br&gt;To use the custom mode you are required to add exercise list. Here you can define training and recovery time for each exercise.&lt;/p&gt;</translation>
+        <translation>&lt;p&gt;&lt;b&gt;Pyramide&lt;/b&gt;&lt;br&gt;Im Pyramidenmodus müssen nur Angaben für den steigenden Arm gemacht werden. Der Fallende ist eine Kopie des Steigenden. Dies gilt auch für die Übungsliste. Im fallenden Arm wird die Übungsliste rückwärest abgearbeitet.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Benutzer&lt;/b&gt;&lt;br&gt;Um den benutzer definierten Modus zu verwenden muss eine Übungsliste erstellt werden. Dort kann die Trainings- und Pausenzeit für jede Übung individuell hinzugefügt werden.&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -37,6 +37,10 @@
     <message>
         <source>You have done it!</source>
         <translation>Geschafft!</translation>
+    </message>
+    <message>
+        <source>Next</source>
+        <translation>Nächste</translation>
     </message>
 </context>
 <context>
@@ -257,7 +261,7 @@
     </message>
     <message>
         <source>Custom</source>
-        <translation>Frei</translation>
+        <translation>Benutzerdefiniert</translation>
     </message>
     <message>
         <source>Exercise List</source>
@@ -272,20 +276,16 @@
         <translation>Pause</translation>
     </message>
     <message>
-        <source>Modify</source>
-        <translation>Anpassen</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translation>Hinzufügen</translation>
-    </message>
-    <message>
-        <source>exercise list</source>
-        <translation>Übungsliste</translation>
-    </message>
-    <message>
         <source>Save changes to your profile prior start.</source>
         <translation>Speichere die Änderungen bevor du startest.</translation>
+    </message>
+    <message>
+        <source>Modify exercise list</source>
+        <translation>Übungsliste bearbeiten</translation>
+    </message>
+    <message>
+        <source>Add an exercise list</source>
+        <translation>Übungsliste hinzufügen</translation>
     </message>
 </context>
 <context>

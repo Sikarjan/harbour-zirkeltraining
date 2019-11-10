@@ -1,7 +1,7 @@
-Qt.include("QtQuick.LocalStorage");
+.import QtQuick.LocalStorage 2.0 as Sql
 
 function getDatabase() {
-    return LocalStorage.openDatabaseSync("Settings", "1.0", "StorageDatabase", 100000);
+    return Sql.LocalStorage.openDatabaseSync("Settings", "1.0", "StorageDatabase", 100000);
 }
 
 function initialize() {
@@ -181,6 +181,10 @@ function writeProfile(mode) {
     clock.adjustmentTimePause = adjustmentSliderPause.value;
     if(exerciseModel.count > 0){
         clock.exercise = exerciseModel.get(0).exercise
+
+        if(exerciseModel.count > 1){
+            clock.nextExercise = exerciseModel.get(1).exercise
+        }
     }
 
     if(mode === 'start'){
@@ -239,5 +243,21 @@ function saveExerciseList(index) {
             }
         }
     });
+    return res;
+}
+
+function getTotalTime(index) {
+    if(exerciseModel.count < 1)
+        return 0;
+
+    var db = getDatabase();
+    var res = 0;
+
+    db.transaction(function(tx) {
+        var rs = tx.executeSql('SELECT SUM(training + recover) AS exTime, COUNT(training) AS counts FROM exercise WHERE refId = ?;', [index]);
+
+        res = [rs.rows.item(0).exTime, rs.rows.item(0).counts];
+    });
+
     return res;
 }

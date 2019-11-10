@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import "../components"
 import QtQuick.LocalStorage 2.0
 import "../js/storage.js" as Storage
 
@@ -136,7 +137,7 @@ Dialog {
                 width: parent.width-2*Theme.paddingMedium
                 x: Theme.paddingMedium
 
-                Slider {
+                ButtonSlider {
                     id: trainingSlider
                     visible: tStyle === 5
                     width: parent.width
@@ -145,10 +146,10 @@ Dialog {
                     minimumValue: 10
                     maximumValue: 600
                     stepSize: 5
-                    valueText: value + " s"
+                    unit: "s"
                 }
 
-                Slider {
+                ButtonSlider {
                     id: recoverSlider
                     visible: tStyle === 5
                     width: parent.width
@@ -157,7 +158,7 @@ Dialog {
                     minimumValue: 0
                     maximumValue: 600
                     stepSize: 5
-                    valueText: value + " s"
+                    unit: "s"
                 }
 
                 TextField {
@@ -193,21 +194,39 @@ Dialog {
                     text: qsTr("Exercise list is full. To add additional exercises accept and edit your training settings first.")
                 }
 
-                Row {
+                Item {
                     anchors.right: parent.right
-                    spacing: Theme.paddingSmall
+                    width: parent.width
+                    height: addExerciseButton.height
 
                     Label {
+                        id: addExerciseLabel
                         anchors.verticalCenter: parent.verticalCenter
+                        anchors.right: addExerciseButton.left
+                        anchors.rightMargin: Theme.paddingSmall
                         text: exerciseId !== -1 ? qsTr("Update exercise ")+(exerciseId+1):(editPos.text === "" ? qsTr("Append exercise"):qsTr("Insert exercise"))
                     }
 
                     IconButton {
                         id: addExerciseButton
+                        anchors.right: parent.right
                         icon.source: "image://theme/icon-m-add?" + (pressed
                                                                      ? Theme.highlightColor
                                                                      : Theme.primaryColor)
+                    }
+                    MouseArea {
+                        anchors.fill: parent
+
                         onClicked: addExercise()
+
+                        onPressed: {
+                            addExerciseButton.icon.source = "image://theme/icon-m-add?"+Theme.highlightColor
+                            addExerciseLabel.color = Theme.highlightColor
+                        }
+                        onReleased: {
+                            addExerciseButton.icon.source = "image://theme/icon-m-add?"+Theme.primaryColor
+                            addExerciseLabel.color = Theme.primaryColor
+                        }
                     }
                 }
 
@@ -249,7 +268,10 @@ Dialog {
                 menu: contextMenu
                 ListView.onRemove: animateRemoval(listItem)
                 function remove() {
-                    remorseAction(qsTr("Deleting"), function() { exerciseList.model.remove(index) })
+                    remorseAction(qsTr("Deleting"), function() {
+                        exerciseList.model.remove(index);
+                        exPage.listChanged = true;
+                    })
                 }
 
                 Row {

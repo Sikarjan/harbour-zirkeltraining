@@ -32,12 +32,19 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import QtQuick.Particles 2.0
 import "../components"
-import Nemo.KeepAlive 1.1
+import Nemo.KeepAlive 1.2
 import "../js/storage.js" as Storage
 
 Page {
-    id: countdownPage
+    id: root
     allowedOrientations: Orientation.All
+
+    property int totalTrainingTime: 0
+    property int elapstTrainingTime: -8
+
+    DisplayBlanking {
+        id: blanking
+    }
 
     onStatusChanged: {
         if (status === PageStatus.Deactivating) {
@@ -49,8 +56,8 @@ Page {
                 clock.iniStart = true
                 confetti.running = false
                 applause.stop()
-                DisplayBlanking.preventBlanking = false
-                keepAlive.enabled = false
+                blanking.preventBlanking = false
+                KeepAlive.enabled = false
 
                 if(exerciseModel.count > 0){
                     Storage.initialize()
@@ -58,18 +65,57 @@ Page {
                 }
             }
         }else if(status === PageStatus.Activating){
-            DisplayBlanking.preventBlanking = clock.displayOn
+            blanking.preventBlanking = clock.displayOn
         }
     }
 
     Component.onCompleted: {
         myTime.running = true
-        keepAlive.enabled = true
+        KeepAlive.enabled = true
         if(player.playlist !== ""){
             player.setSource(player.playlist)
             if(player.random)
                 player.shuffle()
         }
+        // Calc complete exercise time
+        switch (clock.tStyle) {
+        case 0: // Static
+            root.totalTrainingTime = clock.cycles * (clock.trainingTime + clock.holdTime) - clock.holdTime
+            break;
+        case 1: // Pyramid
+            var maxTraining = clock.trainingTime + (clock.tipCycle -1) * clock.adjustmentTime
+            var maxPause = clock.holdTime + (clock.tipCycle -2) * clock.adjustmentTimePause
+            root.totalTrainingTime = clock.tipCycle * maxTraining + (maxPause + clock.holdTime)*(clock.tipCycle -1)
+            break;
+        case 2: // Raising
+            var avgPause = ((clock.holdTime+clock.adjustmentTimePause*(clock.cycles-1)) + clock.holdTime)/2
+            var avgTraining = ((clock.trainingTime+clock.adjustmentTime*clock.cycles) + clock.trainingTime)/2
+
+            root.totalTrainingTime = (avgPause + avgTraining) * clock.cycles - avgPause
+            break;
+        case 3: // Falling
+            avgPause = ((clock.holdTime - clock.adjustmentTimePause*(clock.cycles-1)) + clock.holdTime)/2
+            avgTraining = ((clock.trainingTime - clock.adjustmentTime*clock.cycles) + clock.trainingTime)/2
+
+            root.totalTrainingTime = (avgPause + avgTraining) * clock.cycles - avgPause
+            break;
+        case 4: // Zig Zag
+            avgTraining = (clock.trainingTime + clock.adjustmentTime)/2
+            avgPause = (clock.holdTime + clock.adjustmentTimePause)/2
+
+            root.totalTrainingTime = (avgPause + avgTraining) * clock.cycles - avgPause
+            break;
+        case 5: // Custom
+            var custom = Storage.getTotalTime(profile.profileID)
+            var factor = clock.cycles/custom[1];
+            root.totalTrainingTime = custom[0]*factor;
+            break;
+        }
+
+        root.totalTrainingTime = root.totalTrainingTime + 2* clock.cycles -1
+
+        // show first ExercisePage
+        textRunIn.start();
     }
 
     NumberAnimation {
@@ -84,28 +130,73 @@ Page {
         easing.type: Easing.InOutCubic
     }
 
+    NumberAnimation {
+        id: textRunOut
+        target: currentEx
+        property: "x"
+        duration: 750
+        easing.type: Easing.InOutQuad
+        from: 0
+        to: parent.width
+
+        running: !clock.trainingPhase
+    }
+    NumberAnimation {
+        id: textRunIn
+        target: currentEx
+        property: "x"
+        duration: 750
+        easing.type: Easing.InOutQuad
+        from: -parent.width
+        to: 0
+
+        running: clock.trainingPhase
+    }
+
     Rectangle {
         id: scene
         anchors.fill: parent
         color: "black"
+
+        Rectangle {
+            id:progress
+            height: headerText.height + 50
+            width: parent.width * (root.elapstTrainingTime/root.totalTrainingTime)
+            color: "blue"
+            visible: clock.tStyle === 5
+            opacity: 0.5
+            Behavior on width {
+                NumberAnimation { duration: 1000}
+            }
+        }
 
         Text {
             id:headerText
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             y: 30
-            text: qsTr("Remaining Cycles:")
+            text: qsTr("Remaining Cycles:") + " " + clock.cycles
             color: "white"
+            font.pixelSize: Theme.fontSizeLarge
         }
 
         Text {
-            id: cycleText
+            id: currentEx
+            anchors {
+                top: headerText.bottom
+                topMargin: Theme.paddingMedium
+            }
             width: parent.width
+            height: parent.height * 0.15
+            visible: exerciseModel.count > 0 && clock.cycles !== 0
             horizontalAlignment: Text.AlignHCenter
-            anchors.top: headerText.bottom
-            text: clock.cycles
+            verticalAlignment: Text.AlignVCenter
+            wrapMode: Text.WordWrap
+            clip: true
             color: "white"
-            font.pixelSize: Theme.fontSizeLarge
+            font.pixelSize: Theme.fontSizeExtraLarge
+
+            text: clock.exercise
         }
 
         Text {
@@ -116,11 +207,18 @@ Page {
             color: (clock.time < 6? "red" : "white")
             opacity: (animateOpacity.running? 0: 1.0)
             font.bold: true
-            font.pixelSize: 300
+            font.pixelSize: scene.height*0.4
 
             onTextChanged: {
-                if(!player.isActive && !soundCountdown.playing && clock.playTick)
+                root.elapstTrainingTime++
+
+                if(!player.isActive && !soundCountdown.playing && clock.playTick){
                     tick.play()
+                }
+
+                if(clock.trainingPhase && !clock.playTick && clock.time < 6){
+                    tick.play()
+                }
             }
         }
 
@@ -131,39 +229,34 @@ Page {
             text: qsTr("You have done it!")
             color: "white"
             font.bold: true
-            font.pixelSize: 60
+            font.pixelSize: Theme.fontSizeExtraLarge
 
             // triggers final animation
-            onVisibleChanged: visible === true? applauseTime.running = true:applauseTime.running = false
+            onVisibleChanged:  {applauseTime.running = visible
+//console.log("Total Time: " +root.elapstTrainingTime)
+            }
         }
 
-
-        Column {
-            id: exercise
-            visible: exerciseModel.count > 0 && clock.cycles !== 0
-            width: parent.width - 2*Theme.paddingMedium
-            anchors.top: display.bottom
-            anchors.bottom: nav.top
-            spacing: Theme.paddingMedium
-
-            Text {
-                id: currentEx
-                anchors.horizontalCenter: parent.horizontalCenter
-                wrapMode: Text.WordWrap
-                color: "white"
-                font.pixelSize: clock.trainingPhase? 60:0
-
-                text: clock.exercise
+        Text {
+            id: nextEx
+            anchors {
+                bottom: nav.top
+                bottomMargin: Theme.paddingMedium
             }
+            width: parent.width
+            height: parent.height * 0.15
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            wrapMode: Text.WordWrap
+            clip: true
+            color: "white"
+            font.pixelSize: clock.trainingPhase ? Theme.fontSizeMedium:Theme.fontSizeExtraLarge
+            visible: exerciseModel.count > 0 && !clock.iniStart && clock.cycles !== 0
 
-            Text {
-                id: nextEx
-                anchors.horizontalCenter: parent.horizontalCenter
-                wrapMode: Text.WordWrap
-                color: "white"
-                font.pixelSize: clock.trainingPhase? 30:60
+            text: qsTr("Next") + ": " + clock.nextExercise
 
-                text: qsTr("Next") + ": " + clock.nextExcercise
+            Behavior on font.pixelSize {
+                NumberAnimation { duration: 500; easing: {type: Easing.InOutBounce; overshoot: 250} }
             }
         }
 

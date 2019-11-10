@@ -30,6 +30,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import "../components"
 import QtQuick.LocalStorage 2.0
 import "../js/storage.js" as Storage
 
@@ -57,12 +58,13 @@ Page {
         }
         if(Storage.getSetting("tickMode") === "1"){
             clock.playTick = true
-            console.log("setting tick mode: on")
         }
-        if(Storage.getSetting("randomizer") === "1")
+        if(Storage.getSetting("randomizer") === "1"){
             player.random = true
-        if(Storage.getSetting("newTracks") === "1")
+        }
+        if(Storage.getSetting("newTracks") === "1"){
             player.newTrack = true
+        }
 
         if(Storage.getSetting("playlist") !== ""){
             player.playlist = Storage.getSetting("playlist")
@@ -178,7 +180,7 @@ Page {
                 onCurrentIndexChanged: profile.profileChanged = true
             }
 
-            Slider {
+            ButtonSlider {
                 id: trainingSlider
                 visible: trainingStyle.currentIndex < 5
                 width: parent.width
@@ -187,14 +189,14 @@ Page {
                 minimumValue: 10
                 maximumValue: 600
                 stepSize: 5
-                valueText: value + " s"
+                unit: "s"
                 onValueChanged: {
                     profile.profileChanged = true
                     checkTime()
                 }
             }
 
-            Slider {
+            ButtonSlider {
                 id: recoverSlider
                 visible: trainingStyle.currentIndex < 5
                 width: parent.width
@@ -203,10 +205,10 @@ Page {
                 minimumValue: 0
                 maximumValue: 600
                 stepSize: 5
-                valueText: value + " s"
+                unit: "s"
                 onValueChanged: profile.profileChanged = true
             }
-            Slider {
+            ButtonSlider {
                 id: cycleSlider
                 width: parent.width
                 label: qsTr("Cycles")
@@ -214,11 +216,10 @@ Page {
                 minimumValue: 1
                 maximumValue: trainingStyle.currentIndex ===3? checkTime():100
                 stepSize: 1
-                valueText: value
                 onValueChanged: profile.profileChanged = true
             }
 
-            Slider {
+            ButtonSlider {
                 id: adjustmentSlider
                 visible: trainingStyle.currentIndex > 0 && trainingStyle.currentIndex < 5
                 width: parent.width
@@ -227,14 +228,14 @@ Page {
                 minimumValue: 5
                 maximumValue: trainingStyle.currentIndex ===3? trainingSlider.value:600
                 stepSize: 5
-                valueText: value
+                unit: "s"
                 onValueChanged: {
                     profile.profileChanged = true
                     checkTime()
                 }
             }
 
-            Slider {
+            ButtonSlider {
                 id: adjustmentSliderPause
                 visible: trainingStyle.currentIndex !== 0 && trainingStyle.currentIndex < 5
                 width: parent.width
@@ -243,7 +244,7 @@ Page {
                 minimumValue: 5
                 maximumValue: trainingStyle.currentIndex === 3 ? recoverSlider.value:600
                 stepSize: 5
-                valueText: value
+                unit: "s"
                 onValueChanged: {
                     profile.profileChanged = true
                     checkTime()
@@ -325,20 +326,29 @@ Page {
                 }
             }
 
-            Row {
+            Item {
                 anchors.right: parent.right
-                spacing: Theme.paddingSmall
+                width: parent.width
+                height: addExerciseButton.height
 
                 Label {
+                    id: addExerciseLabel
                     anchors.verticalCenter: parent.verticalCenter
+                    anchors.right: addExerciseButton.left
+                    anchors.rightMargin: Theme.paddingSmall
                     text: (exerciseModel.count > 0 ? qsTr("Modify exercise list"):qsTr("Add an exercise list"))
                 }
 
                 IconButton {
                     id: addExerciseButton
+                    anchors.right: parent.right
                     icon.source: "image://theme/icon-m-add?" + (pressed
                                                                  ? Theme.highlightColor
                                                                  : Theme.primaryColor)
+                }
+
+                MouseArea {
+                    anchors.fill: parent
                     onClicked: {
                         pageStack.push(Qt.resolvedUrl("ExercisePage.qml"),{
                                            profileID: profile.profileID,
@@ -349,6 +359,14 @@ Page {
                                            tAdjust: adjustmentSlider.value,
                                            rAdjust: adjustmentSliderPause.value
                                        })
+                    }
+                    onPressed: {
+                        addExerciseButton.icon.source = "image://theme/icon-m-add?"+Theme.highlightColor
+                        addExerciseLabel.color = Theme.highlightColor
+                    }
+                    onReleased: {
+                        addExerciseButton.icon.source = "image://theme/icon-m-add?"+Theme.primaryColor
+                        addExerciseLabel.color = Theme.primaryColor
                     }
                 }
             }
@@ -376,8 +394,9 @@ Page {
                 text: qsTr("Save changes to your profile prior start.")
             }
 
-            Rectangle {
+            Item {
                 height: Theme.paddingLarge
+                width: parent.width
             }
         }
     }

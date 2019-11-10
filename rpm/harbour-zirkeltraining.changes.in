@@ -1,6 +1,13 @@
 # - Summary of changes
-* Tue Oct 22 2019 FloR707 <store@innobiz.de> 3.1.0-1
+* Mon Nov 18 2019 FloR707 <store@innobiz.de> 3.1.0-1
 - [new] Upcoming exercise added to display
+- [new] Added total progess bar for custom mode
+- [new] Added tick sound on last five seconds of exercise
+- [new] Icon in 172x172
+- [improved] Added buttons to modify sliders
+- [improved] German translation
+- [improved] Switched form Nemo.KeepAlive 1.1 to 1.2
+- [bug] Fixed save changed exercise list not visible when exercise is deleted from list
 
 * Sat Jun 09 2018 FloR707 <store@innobiz.de> 3.0.0-1
 - [new] Custom mode added

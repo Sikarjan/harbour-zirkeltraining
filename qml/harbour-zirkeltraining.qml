@@ -34,7 +34,7 @@ import QtMultimedia 5.0
 import "pages"
 
 import harbour.zirkeltraining 1.0
-import Nemo.KeepAlive 1.1
+import Nemo.KeepAlive 1.2
 
 ApplicationWindow
 {
@@ -62,15 +62,11 @@ ApplicationWindow
         property int cycles
 
         onProfileChangedChanged: {
-//            console.log('Current profile changed? '+profileChanged)
+            console.log('Current profile changed? '+profileChanged)
             if (profileChanged === true && profile.profileID !== -1) {
                  profileTitel = profileTitel+"*"
              }
         }
-    }
-
-    KeepAlive {
-        id: keepAlive
     }
 
     Item {
@@ -201,7 +197,7 @@ ApplicationWindow
                             clock.iniStart = false
                         }else{
                             // recover phase is over
-                            console.log("New Cylcle: "+clock.cycles)
+                            // console.log("New Cylcle: "+clock.cycles)
 
                             // Update exercise texts
                             if(exerciseModel.count === 1){
@@ -226,7 +222,7 @@ ApplicationWindow
                                 }
                                 clock.holdTime = clock.holdTime+clock.adjustmentTimePause
                                 clock.trainingTime = clock.trainingTime+clock.adjustmentTime
-                                console.log(clock.holdTime + ": "+clock.trainingTime)
+// console.log(clock.holdTime + ": "+clock.trainingTime)
                                 break;
                             case 2: // Raising
                                 clock.holdTime = clock.holdTime+clock.adjustmentTimePause
@@ -252,15 +248,20 @@ ApplicationWindow
 
                         if(player.isActive){
                             var pState = player.play()
-                            console.log("Starting Player with state: "+pState)
+// console.log("Starting Player with state: "+pState)
+
+                            if(pState !== 1){
+                                player.play()
+                            }
                         }
                     }
                 }
 
-                if(clock.time <= 5 && clock.time >4 && !clock.trainingPhase && !soundCountdown.playing)
+                if(clock.time <= 5 && clock.time >4 && !clock.trainingPhase && !soundCountdown.playing){
                     soundCountdown.play()
-                else if(clock.time > 5 && soundCountdown.playing)
+                }else if(clock.time > 5 && soundCountdown.playing){
                     soundCountdown.stop()
+                }
             }
         }
 
