@@ -59,6 +59,9 @@ Page {
         if(Storage.getSetting("tickMode") === "1"){
             clock.playTick = true
         }
+        if(Storage.getSetting("applauseMode") === "0"){
+            clock.applause = false
+        }
         if(Storage.getSetting("randomizer") === "1"){
             player.random = true
         }

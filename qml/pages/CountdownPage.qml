@@ -232,8 +232,8 @@ Page {
             font.pixelSize: Theme.fontSizeExtraLarge
 
             // triggers final animation
-            onVisibleChanged:  {applauseTime.running = visible
-//console.log("Total Time: " +root.elapstTrainingTime)
+            onVisibleChanged:  {
+                applauseTime.running = visible
             }
         }
 

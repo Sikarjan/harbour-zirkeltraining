@@ -439,6 +439,18 @@
         <source>Enable tick</source>
         <translation>Sekundentick aktivieren</translation>
     </message>
+    <message>
+        <source>Disable applause</source>
+        <translation>Applaus deaktivieren</translation>
+    </message>
+    <message>
+        <source>Enable applause</source>
+        <translation>Applaus aktivieren</translation>
+    </message>
+    <message>
+        <source>Plays an applause at the end of a session.</source>
+        <translation>Legt fest ob am Ende des Training ein Applaus kommt.</translation>
+    </message>
 </context>
 <context>
     <name>harbour-zirkeltraining</name>

@@ -87,6 +87,7 @@ ApplicationWindow
         property string statusText: qsTr("Get ready!")
         property bool displayOn: false
         property bool playTick: false
+        property bool applause: true
         property string exercise: ""
         property string nextExercise: ""
 
@@ -175,7 +176,9 @@ ApplicationWindow
                     if(clock.cycles === 0){
                         myTime.running = false
                         // Button still displays pause symbol. Could be improved
-                        applauseTimer.start()
+                        if(clock.applause){
+                            applauseTimer.start()
+                        }
                     }
                 }else if(clock.time <= -1){
                     if(clock.trainingPhase){

@@ -44,6 +44,13 @@ Dialog {
             text: checked ? qsTr("Disable tick"):qsTr("Enable tick")
             description: qsTr("Play tick on every second if no playlist is selected.")
         }
+
+        TextSwitch {
+            id: applauseSwitch
+            checked: clock.applause
+            text: checked ? qsTr("Disable applause"):qsTr("Enable applause")
+            description: qsTr("Plays an applause at the end of a session.")
+        }
     }
 
 
@@ -54,10 +61,12 @@ Dialog {
     onAccepted: {
         Storage.setSetting("sleepMode", screenSaverSwitcher.checked)
         Storage.setSetting("tickMode", tickSwitch.checked)
+        Storage.setSetting("applauseMode", applauseSwitch.checked)
         Storage.setSetting("randomizer", randomizeSwitcher.checked)
         Storage.setSetting("newTracks", newTrackSwitcher.checked)
         clock.displayOn = screenSaverSwitcher.checked
         clock.playTick = tickSwitch.checked
+        clock.applause = applauseSwitch.checked
         player.random = randomizeSwitcher.checked
         player.newTrack = newTrackSwitcher.checked
     }
