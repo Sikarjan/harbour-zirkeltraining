@@ -132,15 +132,16 @@ Page {
 
     NumberAnimation {
         id: textRunOut
+        running: !clock.trainingPhase
         target: currentEx
         property: "x"
         duration: 750
         easing.type: Easing.InOutQuad
         from: 0
-        to: parent.width
-
-        running: !clock.trainingPhase
+        to: parent.width + 50
     }
+
+
     NumberAnimation {
         id: textRunIn
         target: currentEx
@@ -256,7 +257,7 @@ Page {
             text: qsTr("Next") + ": " + clock.nextExercise
 
             Behavior on font.pixelSize {
-                NumberAnimation { duration: 500; easing: {type: Easing.InOutBounce; overshoot: 250} }
+                NumberAnimation { duration: 500; easing.type: Easing.InOutBounce; easing.overshoot: 250 }
             }
         }
 

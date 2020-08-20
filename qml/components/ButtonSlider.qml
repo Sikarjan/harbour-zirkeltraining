@@ -22,7 +22,6 @@ Item {
                                                      : Theme.primaryColor)
 
         onClicked: {
-            console.log("höhe: "+ mSlider.height + " breite: " + mSlider.width)
             if(mSlider.value > mSlider.minimumValue){
                 mSlider.value = mSlider.value-mSlider.stepSize
             }
@@ -31,8 +30,10 @@ Item {
 
     Slider {
         id: mSlider
-        anchors.horizontalCenter: parent.horizontalCenter
-        width: root.width - buttonLeft.width/2
+//        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.left: buttonLeft.right
+        anchors.right: buttonRight.left
+        anchors.margins: Theme.paddingSmall
 
         label: root.label
         value: root.value
@@ -45,6 +46,7 @@ Item {
     }
 
     IconButton {
+        id: buttonRight
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
         icon.source: "image://theme/icon-m-right?" + (pressed

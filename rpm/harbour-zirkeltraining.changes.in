@@ -1,4 +1,9 @@
 # - Summary of changes
+* Thu Aug 20 2020 FloR707 <store@innobiz.de> 3.2.1-1
+- [bug] Settings page did not scroll
+- [bug] Buttons on sliders were not aligned correctly
+- [bug] Exercise text was not moved out completly on long text
+
 * Mon Nov 18 2019 FloR707 <store@innobiz.de> 3.2.0-1
 - [new] Applause at end of cycles can be turned off
 

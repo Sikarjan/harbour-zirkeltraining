@@ -7,49 +7,56 @@ Dialog {
     id: preferencePage
     anchors.fill: parent
 
-    Column {
-        width: preferencePage.width
-        spacing: Theme.paddingLarge
+    SilicaFlickable {
+        anchors.fill: parent
+        contentHeight: column.height
+        VerticalScrollDecorator {}
 
-        DialogHeader {
-            title: qsTr("Save")
-            cancelText: qsTr("Cancel")
-        }
+        Column {
+            id: column
+            width: preferencePage.width
+            spacing: Theme.paddingLarge
 
-        TextSwitch {
-            id: randomizeSwitcher
-            checked: player.random
-            text: qsTr("Randomize Playlist")
-            description: qsTr("When activated current playlist gets randomized on loading.")
-        }
+            DialogHeader {
+                title: qsTr("Save")
+                cancelText: qsTr("Cancel")
+            }
 
-        TextSwitch {
-            id: newTrackSwitcher
-            checked: player.newTrack
-            text: qsTr("New track")
-            description: qsTr("When active a new track is played in every training phase.")
-        }
+            TextSwitch {
+                id: randomizeSwitcher
+                checked: player.random
+                text: qsTr("Randomize Playlist")
+                description: qsTr("When activated current playlist gets randomized on loading.")
+            }
 
-        TextSwitch {
-            id: screenSaverSwitcher
-            checked: clock.displayOn
-            text: checked ? qsTr("Enable screen saver"):qsTr("Disable screen saver")
-            description: qsTr("When activated prevents screen from being turned off.")
-//            onCheckedChanged: sleep.preventSleep = screenSaverSwitcher.checked
-        }
+            TextSwitch {
+                id: newTrackSwitcher
+                checked: player.newTrack
+                text: qsTr("New track")
+                description: qsTr("When active a new track is played in every training phase.")
+            }
 
-        TextSwitch {
-            id: tickSwitch
-            checked: clock.playTick
-            text: checked ? qsTr("Disable tick"):qsTr("Enable tick")
-            description: qsTr("Play tick on every second if no playlist is selected.")
-        }
+            TextSwitch {
+                id: screenSaverSwitcher
+                checked: clock.displayOn
+                text: checked ? qsTr("Enable screen saver"):qsTr("Disable screen saver")
+                description: qsTr("When activated prevents screen from being turned off.")
+    //            onCheckedChanged: sleep.preventSleep = screenSaverSwitcher.checked
+            }
 
-        TextSwitch {
-            id: applauseSwitch
-            checked: clock.applause
-            text: checked ? qsTr("Disable applause"):qsTr("Enable applause")
-            description: qsTr("Plays an applause at the end of a session.")
+            TextSwitch {
+                id: tickSwitch
+                checked: clock.playTick
+                text: checked ? qsTr("Disable tick"):qsTr("Enable tick")
+                description: qsTr("Play tick on every second if no playlist is selected.")
+            }
+
+            TextSwitch {
+                id: applauseSwitch
+                checked: clock.applause
+                text: checked ? qsTr("Disable applause"):qsTr("Enable applause")
+                description: qsTr("Plays an applause at the end of a session.")
+            }
         }
     }
 
