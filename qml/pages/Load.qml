@@ -62,7 +62,7 @@ Page {
 
                 function remove() {
                     remorseAction(qsTr("Deleting profile"), function() {
-                        Storage.deleteProfileItem(uid)
+                        Storage.deleteProfile(uid)
                         if(uid === clock.profileID)
                             profile.profileID = -1
                         profileList.model.remove(index)

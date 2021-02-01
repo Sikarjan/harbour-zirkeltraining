@@ -1,4 +1,7 @@
 # - Summary of changes
+* Sun Jan 31 2021 FloR707 <store@innobiz.de> 3.2.2-1
+- [bug] Saved profile could not be deleted
+
 * Thu Aug 20 2020 FloR707 <store@innobiz.de> 3.2.1-1
 - [bug] Settings page did not scroll
 - [bug] Buttons on sliders were not aligned correctly
