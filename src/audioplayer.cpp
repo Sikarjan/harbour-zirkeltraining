@@ -57,6 +57,6 @@ void AudioPlayer::next(){
 }
 
 void AudioPlayer::shuffle(){
-    qsrand(QDateTime::currentDateTime().toTime_t() );
+    qsrand(QDateTime::currentDateTimeUtc().toTime_t() );
     playlist->shuffle();
 }

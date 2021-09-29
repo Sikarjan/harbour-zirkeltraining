@@ -28,7 +28,7 @@ Dialog {
         width: parent.width
         height: parent.height - header.height
         anchors.top: header.bottom
-        spacing: Theme.paddingLarge
+        spacing: Theme.paddingMedium
         VerticalScrollDecorator {}
 
         model: m_playlists
@@ -37,7 +37,7 @@ Dialog {
 
         delegate: TextSwitch {
             id: playlistSwitch
-            height: 50
+//            height: 50
             width:  parent.width
             property bool isChecked: (index === myListView.selected? playlistSwitch.checked = true:playlistSwitch.checked = false)
 

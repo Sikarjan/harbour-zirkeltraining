@@ -15,7 +15,7 @@ void Chronos::setRunning(bool status){
         setTime = 6;
     }
 
-    runningChanged(mRunning);
+    emit runningChanged(mRunning);
 }
 
 // Restart cycle with new time
@@ -37,6 +37,6 @@ void Chronos::setPause(bool status){
             startTime = startTime.addMSecs(pauseTime.elapsed());
         }
 
-        pauseChanged(status);
+        emit pauseChanged(status);
     }
 }
