@@ -26,6 +26,7 @@ public slots:
     void stop();
     void next();
     void shuffle();
+    int status();
 
 private:
     QMediaPlaylist *playlist;

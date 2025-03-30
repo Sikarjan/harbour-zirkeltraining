@@ -41,6 +41,7 @@ Page {
 
     property int totalTrainingTime: 0
     property int elapstTrainingTime: -8
+    property int totalCycles: 0
 
     DisplayBlanking {
         id: blanking
@@ -72,6 +73,7 @@ Page {
     Component.onCompleted: {
         myTime.running = true
         KeepAlive.enabled = true
+        totalCycles = clock.cycles
         if(player.playlist !== ""){
             player.setSource(player.playlist)
             if(player.random)
@@ -125,8 +127,8 @@ Page {
         running: clock.time < 6 && Qt.application.state === Qt.ApplicationActive
         from: 0.1
         to: 1.0
-        duration: 1000
-        loops: Animation.Infinite
+        duration: 800
+ //       loops: Animation.Infinite
         easing.type: Easing.InOutCubic
     }
 
@@ -140,7 +142,6 @@ Page {
         from: 0
         to: parent.width + 50
     }
-
 
     NumberAnimation {
         id: textRunIn
@@ -176,7 +177,7 @@ Page {
             width: parent.width
             horizontalAlignment: Text.AlignHCenter
             y: 30
-            text: qsTr("Remaining Cycles:") + " " + clock.cycles
+            text: qsTr("Remaining Cycles:") + " " + clock.cycles + " / " + totalCycles
             color: "white"
             font.pixelSize: Theme.fontSizeLarge
         }

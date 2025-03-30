@@ -60,3 +60,7 @@ void AudioPlayer::shuffle(){
     qsrand(QDateTime::currentDateTimeUtc().toTime_t() );
     playlist->shuffle();
 }
+
+int AudioPlayer::status(){
+    return player->state();
+}

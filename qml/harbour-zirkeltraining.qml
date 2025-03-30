@@ -158,12 +158,16 @@ ApplicationWindow
 
             onTriggered: {
                 clock.time = myTime.getTime()
-
+/*
                 if(clock.time != clock.last){
 //                    console.log(clock.time+" clock State: "+clock.state+" Running: "+myTime.running)
+                    if(clock.trainingPhase){
+                        console.log(player.status())
+                    }
+
                     clock.last = clock.time
                 }
-
+*/
                 if(clock.time === 0 && !soundGong.playing && clock.trainingPhase){
                     if(player.isActive)
                         player.pause()
@@ -250,10 +254,10 @@ ApplicationWindow
                         myTime.setNewTime(clock.trainingTime)
 
                         if(player.isActive){
-                            var pState = player.play()
-// console.log("Starting Player with state: "+pState)
+                            player.play()
 
-                            if(pState !== 1){
+                            if(player.status() !== 1){
+                                console.log("Player did not start! " + clock.cycles)
                                 player.play()
                             }
                         }
